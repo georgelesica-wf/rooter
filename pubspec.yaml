@@ -11,4 +11,7 @@ environment:
 #  path: ^1.4.1
 
 dev_dependencies:
+  dart_dev: ^1.7.7
+  dart_style: ^1.0.7
+  meta: ^1.1.1
   test: ^0.12.0
