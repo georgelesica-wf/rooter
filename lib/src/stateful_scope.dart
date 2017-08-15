@@ -19,10 +19,19 @@ abstract class StatefulScope {
   StreamController<StateStack> _onStateAnnouncedController =
       new StreamController<StateStack>.broadcast();
 
+  /// The child scope that is currently active.
+  ///
+  /// The path implied by selecting the active child scope recursively
+  /// is the active hierarchy of this scope.
   StatefulScope get activeChildScope;
 
+  /// The current state for this object.
+  ///
+  /// This is constructed by the consumer, likely from various sources.
   ScopeState get currentState;
 
+  /// The stack representing the recursive state of this object and all
+  /// objects in its active hierarchy.
   StateStack get currentStateStack {
     if (activeChildScope == null) {
       return new StateStack(currentState);
@@ -31,8 +40,7 @@ abstract class StatefulScope {
   }
 
   /// Stream that fires when the object changes its own internal state.
-  Stream<StateStack> get onStateAnnounced =>
-      _onStateAnnouncedController.stream;
+  Stream<StateStack> get onStateAnnounced => _onStateAnnouncedController.stream;
 
   /// Requests that the object accept new state from outside.
   Future<Null> acceptState(AcceptStateEvent event) async {
