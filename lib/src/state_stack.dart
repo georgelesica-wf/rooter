@@ -25,6 +25,6 @@ class StateStack {
 
   /// Return a new stack with the given state object pushed.
   StateStack pushed(ScopeState state) => new StateStack._([]
-    ..addAll(_stack)
-    ..add(state));
+    ..add(state)
+    ..addAll(_stack));
 }

@@ -14,8 +14,6 @@ import 'state_stack.dart';
 /// it is passed as a collection of state objects which are consumed
 /// one per nesting level until none remain.
 abstract class StatefulScope {
-  Set<StatefulScope> _childScopes = new Set<StatefulScope>();
-
   StreamController<StateStack> _onStateAnnouncedController =
       new StreamController<StateStack>.broadcast();
 
@@ -69,8 +67,6 @@ abstract class StatefulScope {
 
   /// Add a child scope.
   void addChild(StatefulScope scope) {
-    _childScopes.add(scope);
-
     scope.onStateAnnounced.listen((stateStack) {
       if (scope == activeChildScope) {
         announceState();

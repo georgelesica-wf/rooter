@@ -1,13 +1,27 @@
 /// A container for scope state.
-abstract class ScopeState {
-  Map<String, String> _parameters = {};
+class ScopeState {
+  Map<String, String> _parameters = <String, String>{};
 
   /// Scope type, used as a top-level identifier.
-  String get type;
+  final String type;
 
   /// Scope ID, used as a second-level identifier.
-  String get id;
+  final String id;
+
+  ScopeState(this.type, this.id);
 
   /// Fetch a parameter value.
-  String get(String name) => _parameters[name];
+  String get(String key) => _parameters[key];
+
+  /// Fetch a parameter value converted to an int.
+  int getInt(String key) {
+    var strValue = _parameters[key];
+    if (strValue == null) {
+      return null;
+    }
+    return int.parse(strValue);
+  }
+
+  /// Set a parameter value.
+  void set(String key, Object value) => _parameters[key] = value.toString();
 }
