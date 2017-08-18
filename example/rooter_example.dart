@@ -18,7 +18,7 @@ class Experience extends StatefulScope {
   }
 
   @override
-  StatefulScope get activeChildScope => _children[_selectedChildId];
+  StatefulScope get selectedChildScope => _children[_selectedChildId];
 
   @override
   ScopeState get currentState =>
@@ -27,7 +27,7 @@ class Experience extends StatefulScope {
   Stream<Null> get triggerStream => _triggerController.stream;
 
   void embed(Experience experience) {
-    addChild(experience);
+    addChildScope(experience);
     experience.triggerStream.listen((_) {
       trigger();
     });
