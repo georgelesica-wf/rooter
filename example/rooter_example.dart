@@ -6,7 +6,8 @@ import 'package:rooter/rooter.dart';
 class Experience extends StatefulScope {
   static int _nextId = 0;
 
-  StreamController<Null> _triggerController = new StreamController<Null>.broadcast();
+  StreamController<Null> _triggerController =
+      new StreamController<Null>.broadcast();
 
   Map<int, Experience> _children = <int, Experience>{};
   int _id;
@@ -93,17 +94,16 @@ class Experience extends StatefulScope {
     body.append(content);
 
     _children.forEach((id, experience) {
-      var childContainer = new DivElement()
-        ..className = 'container embedded';
+      var childContainer = new DivElement()..className = 'container embedded';
 
-        _subs.add(childContainer.onClick.listen((event) {
-          event.stopPropagation();
+      _subs.add(childContainer.onClick.listen((event) {
+        event.stopPropagation();
 
-          // Child selection
-          _selectedChildId = id;
+        // Child selection
+        _selectedChildId = id;
 
-          trigger();
-        }));
+        trigger();
+      }));
 
       if (_selectedChildId == id) {
         childContainer.className += ' selected';
@@ -126,7 +126,7 @@ void setHash(StateStack stack) {
     stack = stack.popped();
   }
 
-  window.location.hash = hash;
+  window.history.pushState('new data', 'new title', hash);
 }
 
 main() {
