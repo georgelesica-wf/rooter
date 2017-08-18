@@ -21,7 +21,7 @@ abstract class StatefulScope {
   ///
   /// The path implied by selecting the active child scope recursively
   /// is the active hierarchy of this scope.
-  StatefulScope get activeChildScope;
+  StatefulScope get selectedChildScope;
 
   /// The current state for this object.
   ///
@@ -31,10 +31,10 @@ abstract class StatefulScope {
   /// The stack representing the recursive state of this object and all
   /// objects in its active hierarchy.
   StateStack get currentStateStack {
-    if (activeChildScope == null) {
+    if (selectedChildScope == null) {
       return new StateStack(currentState);
     }
-    return activeChildScope.currentStateStack.pushed(currentState);
+    return selectedChildScope.currentStateStack.pushed(currentState);
   }
 
   /// Stream that fires when the object changes its own internal state.
@@ -53,7 +53,7 @@ abstract class StatefulScope {
     }
 
     var childEvent = new AcceptStateEvent(event.proposedStateStack.popped());
-    await activeChildScope.acceptState(childEvent);
+    await selectedChildScope.acceptState(childEvent);
     if (childEvent.wasRejected) {
       event.reject();
     }
@@ -66,9 +66,9 @@ abstract class StatefulScope {
   }
 
   /// Add a child scope.
-  void addChild(StatefulScope scope) {
+  void addChildScope(StatefulScope scope) {
     scope.onStateAnnounced.listen((stateStack) {
-      if (scope == activeChildScope) {
+      if (scope == selectedChildScope) {
         announceState();
       }
     });

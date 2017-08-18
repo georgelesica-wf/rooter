@@ -22,6 +22,9 @@ class ScopeState {
     return int.parse(strValue);
   }
 
+  /// Whether the state includes the given key.
+  bool hasParameter(String key) => _parameters.containsKey(key);
+
   /// Set a parameter value.
   void set(String key, Object value) => _parameters[key] = value.toString();
 }
